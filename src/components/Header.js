@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import "../styles/main.css";
+
 
 function Header() {
 
@@ -9,14 +10,21 @@ function Header() {
 
         <header className="header" data-testid="header">
             <div className="banner-container">
-                <img id="logo" src="{'/assets/images/flick-finder-logo.png'}" alt="website logo" />
+                <img id="logo" src={'/assets/images/flick-finder-logo.png'} alt="website logo" />
             </div>
 
             <div className="navigation-links">
-                <button id="homeButton">Home</button>
-                <button id="findAFilmButton">Find a Film</button>
-                <button id="starListButton">Star List</button>
+                <Link to="/">
+                    <button id="homeButton">Home</button>
+                </Link>
 
+                <Link to="/findafilm">
+                    <button id="findAFilmButton">Find a Film</button>
+                </Link>
+
+                <Link to="/starlist">
+                    <button id="starListButton">Star List</button>
+                </Link>
 
 
             </div>
