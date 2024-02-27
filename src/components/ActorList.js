@@ -21,6 +21,12 @@ function ActorList() {
         fetchActors();
     }, []);
 
+    const chunkArray = (arr, size) => {
+        return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+            arr.slice(i * size, i * size + size)
+        );
+    };
+
     return (
         <div id="actor-list-container">
             {loading ? (
@@ -30,11 +36,17 @@ function ActorList() {
             ) : (
                 <div>
                     <h1 id="star-list-heading">Star List</h1>
-                    <ul id="actor-list">
-                        {actors.map(actor => (
-                            <li key={actor.id}>{actor.firstName} {actor.lastName}</li>
+                    <div id="actor-list">
+                        {chunkArray(actors, 4).map((row, index) => (
+                            <div className="actor-row" key={index}>
+                                {row.map(actor => (
+                                    <div className="actor" key={actor.id}>
+                                        {actor.firstName} {actor.lastName}
+                                    </div>
+                                ))}
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
             )}
         </div>
