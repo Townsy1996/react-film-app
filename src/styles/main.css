@@ -90,6 +90,60 @@ body {
 
 #actor-list li {
     text-align: center; 
-    border: 1px solid #ccc; 
+    border: 1px solid #030303; 
+    background-color: #ffffffce;
     padding: 10px; 
 }
+
+/* ActorForm.css */
+
+#actor-form-container {
+    margin-bottom: 20px;
+}
+
+#actor-form-container button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+#actor-form-container button:hover {
+    background-color: #0056b3;
+}
+
+#actor-form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+#actor-form-container label {
+    margin-bottom: 4px;
+}
+
+#actor-form-container input[type="text"] {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+}
+
+#actor-form-container input[type="submit"] {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+#actor-form-container input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+#error-message {
+    color: red;
+}
+

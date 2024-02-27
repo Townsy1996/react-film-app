@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ActorForm from './ActorForm'; // Assuming the ActorForm component is in the same directory
 
 function ActorList() {
     const [actors, setActors] = useState([]);
@@ -21,10 +22,8 @@ function ActorList() {
         fetchActors();
     }, []);
 
-    const chunkArray = (arr, size) => {
-        return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
-            arr.slice(i * size, i * size + size)
-        );
+    const handleAddActor = (newActor) => {
+        setActors([...actors, newActor]);
     };
 
     return (
@@ -36,17 +35,12 @@ function ActorList() {
             ) : (
                 <div>
                     <h1 id="star-list-heading">Star List</h1>
-                    <div id="actor-list">
-                        {chunkArray(actors, 4).map((row, index) => (
-                            <div className="actor-row" key={index}>
-                                {row.map(actor => (
-                                    <div className="actor" key={actor.id}>
-                                        {actor.firstName} {actor.lastName}
-                                    </div>
-                                ))}
-                            </div>
+                    <ActorForm onAddActor={handleAddActor} />
+                    <ul id="actor-list">
+                        {actors.map(actor => (
+                            <li key={actor.id}>{actor.firstName} {actor.lastName}</li>
                         ))}
-                    </div>
+                    </ul>
                 </div>
             )}
         </div>
