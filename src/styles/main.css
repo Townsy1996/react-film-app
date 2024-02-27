@@ -1,33 +1,33 @@
-/* main.css */
-
-/* Style for the header container */
+body{
+    background-color: #0fa8adc7;
+}
 .header {
-    background-color: #7a08af;
+    background-color: #40403f;
     padding: 20px;
     display: flex;
     justify-content: space-between;
   }
-  
-  /* Style for the banner container */
+
   .banner-container {
-    text-align: center;
+  
     margin-bottom: 10px;
-    order: 2; /* Move the banner container to the right */
+    order: 2;
+    background: linear-gradient(to bottom, #40403f 0%, rgb(234, 232, 239) 100%);
+    
+  }
+
+  #main-title{
+    margin-right: auto;
+    color: aliceblue; 
   }
   
-  /* Style for the logo */
-  #logo {
-    width: 80px;
-    height: auto;
-    order: 1; /* Move the logo to the left */
-  }
-  
+
   /* Style for the navigation links */
   .navigation-links {
     display: flex;
-    justify-content: flex-end; /* Align navigation links to the right */
+    justify-content: flex-end; 
     margin-top: 20px;
-    order: 3; /* Move the navigation links to the right */
+    order: 3; 
   }
   
   /* Style for the navigation buttons */
@@ -38,10 +38,38 @@
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 10px; /* Add some space between buttons */
+    margin-left: 10px;
   }
   
   /* Hover effect for the navigation buttons */
   .navigation-links button:hover {
     background-color: #0056b3;
   }
+
+ 
+
+/* Styles for the message container */
+.home-message {
+    width: 80%;
+    max-width: 600px; 
+    margin: 0 auto; 
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  /* Styles for the title */
+  #welcomeTitle {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles for the paragraph */
+  .home-message p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 0; /* Remove default margin to avoid extra space */
+  }
+  

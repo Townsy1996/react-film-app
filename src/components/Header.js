@@ -10,8 +10,9 @@ function Header() {
 
         <header className="header" data-testid="header">
             <div className="banner-container">
-                <img id="logo" src={'/assets/images/flick-finder-logo.png'} alt="website logo" />
+                
             </div>
+            <h1 id='main-title'>Flick Finder</h1>
 
             <div className="navigation-links">
                 <Link to="/">
