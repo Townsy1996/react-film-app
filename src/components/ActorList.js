@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ActorForm from './ActorForm';
-import ActorDelete from './ActorDelete'; 
+import ActorDelete from './ActorDelete';
+import ActorFilms from './ActorFilms';
 
 function ActorList() {
     const [actors, setActors] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedActorId, setSelectedActorId] = useState(null);
+    const [isActorFilmsVisible, setIsActorFilmsVisible] = useState(false);
 
     useEffect(() => {
         const fetchActors = async () => {
@@ -23,13 +26,25 @@ function ActorList() {
         fetchActors();
     }, []);
 
-
     const handleAddActor = (newActor) => {
         setActors([...actors, newActor]);
     };
 
     const handleDeleteActor = (actorId) => {
         setActors(actors.filter(actor => actor.actorId !== actorId));
+        if (selectedActorId === actorId) {
+            setSelectedActorId(null);
+            setIsActorFilmsVisible(false);
+        }
+    };
+
+    const handleActorClick = (actorId) => {
+        setSelectedActorId(actorId);
+        setIsActorFilmsVisible(true);
+    };
+
+    const handleCloseActorFilms = () => {
+        setIsActorFilmsVisible(false);
     };
 
     return (
@@ -44,13 +59,16 @@ function ActorList() {
                     <ActorForm onAddActor={handleAddActor} />
                     <ul id="actor-list">
                         {actors.map(actor => (
-                            <li key={actor.actorId}>
+                            <li key={actor.actorId} onClick={() => handleActorClick(actor.actorId)}>
                                 {actor.firstName} {actor.lastName}
                                 <ActorDelete actorId={actor.actorId} onDelete={handleDeleteActor} />
                             </li>
                         ))}
                     </ul>
                 </div>
+            )}
+            {isActorFilmsVisible && (
+                <ActorFilms actorId={selectedActorId} onClose={handleCloseActorFilms} />
             )}
         </div>
     );
