@@ -23,7 +23,7 @@ function ActorUpdate({ actorId, onUpdate, onClose }) {
             });
             onUpdate(response.data);
             setLoading(false);
-            setExpanded(false); // Reset the expanded state after successful update
+            setExpanded(false); 
         } catch (error) {
             setError(error.message);
             setLoading(false);
@@ -53,14 +53,14 @@ function ActorUpdate({ actorId, onUpdate, onClose }) {
                         <input type="text" id="lastName" value={lastName} onChange={(e) => 
                         setLastName(e.target.value)}/>
                     </div>
-                    <button onClick={handleUpdate} disabled={loading}>
+                    <button id="update-button" onClick={handleUpdate} disabled={loading}>
                         {loading ? 'Updating...' : 'Update'}
                     </button>
                     {error && <div>Error: {error}</div>}
-                    <button onClick={handleClose}>Cancel</button> 
+                    <button id="update-button" onClick={handleClose}>Cancel</button> 
                 </div>
             ) : (
-                <button onClick={() => setExpanded(true)}>Update</button>
+                <button id="update-button" onClick={() => setExpanded(true)}>Update</button>
             )}
         </div>
     );

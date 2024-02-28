@@ -156,6 +156,15 @@ body {
   
 }
 
+#update-button{
+    background-color: rgb(45, 179, 4); 
+    color: #fff;
+    border: none;  
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
 #delete-button:hover {
     background-color: #cc0000; 
 }
