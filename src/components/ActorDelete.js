@@ -4,8 +4,9 @@ import axios from 'axios';
 function ActorDelete({ actorId, onDelete }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
-    const handleDelete = async () => {
+    const handleDelete = (e) => {
         setShowConfirmation(true);
+        e.stopPropagation();
     };
 
     const confirmDelete = async () => {
@@ -22,15 +23,11 @@ function ActorDelete({ actorId, onDelete }) {
         setShowConfirmation(false);
     };
 
-    /* Delete actor button, after click conformation window appears */
-
     return (
         <>
-
-
             <button id='delete-button' onClick={handleDelete}>Delete Actor</button>
             {showConfirmation && (
-                <div className="confirmation-overlay">
+                <div className="confirmation-overlay" onClick={(e) => e.stopPropagation()}>
                     <div className="confirmation-dialog">
                         <p className="confirmation-message">Are you sure you want to delete?</p>
                         <div className="confirmation-buttons">

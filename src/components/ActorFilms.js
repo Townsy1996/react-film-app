@@ -21,9 +21,13 @@ function ActorFilms({ actorId, onClose }) {
         fetchFilmsByActorId();
     }, [actorId]);
 
+    const handleClose = () => {
+        onClose();
+    };
+
     return (
-        <div className="overlay"> 
-            <div className="overlay-content"> 
+        <div className="overlay" onClick={handleClose}> 
+            <div className="overlay-content" onClick={(e) => e.stopPropagation()}> 
                 <button onClick={onClose}>Close</button> 
                 {loading ? (
                     <div>Loading films...</div>

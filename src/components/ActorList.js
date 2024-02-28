@@ -3,6 +3,7 @@ import axios from 'axios';
 import ActorForm from './ActorForm';
 import ActorDelete from './ActorDelete';
 import ActorFilms from './ActorFilms';
+import ActorUpdate from './ActorUpdate'; 
 
 function ActorList() {
     const [actors, setActors] = useState([]);
@@ -38,13 +39,18 @@ function ActorList() {
         }
     };
 
-    const handleActorClick = (actorId) => {
+    const handleActorClick = (actorId, event) => {
+        event.stopPropagation(); 
         setSelectedActorId(actorId);
         setIsActorFilmsVisible(true); 
     };
 
     const handleCloseActorFilms = () => {
         setIsActorFilmsVisible(false); 
+    };
+
+    const handleActorUpdate = (updatedActor) => {
+        setActors(actors.map(actor => actor.actorId === updatedActor.actorId ? updatedActor : actor));
     };
 
     return (
@@ -59,9 +65,10 @@ function ActorList() {
                     <ActorForm onAddActor={handleAddActor} />
                     <ul id="actor-list">
                         {actors.map(actor => (
-                            <li key={actor.actorId} onClick={() => handleActorClick(actor.actorId)}>
+                            <li key={actor.actorId} onClick={(event) => handleActorClick(actor.actorId, event)}>
                                 {actor.firstName} {actor.lastName}
                                 <ActorDelete actorId={actor.actorId} onDelete={handleDeleteActor} />
+                                <ActorUpdate actorId={actor.actorId} onUpdate={handleActorUpdate} />
                             </li>
                         ))}
                     </ul>
