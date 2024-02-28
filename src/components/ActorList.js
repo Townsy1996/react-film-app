@@ -1,3 +1,5 @@
+// ActorList.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ActorForm from './ActorForm';
@@ -11,6 +13,7 @@ function ActorList() {
     const [error, setError] = useState(null);
     const [selectedActorId, setSelectedActorId] = useState(null);
     const [isActorFilmsVisible, setIsActorFilmsVisible] = useState(false); 
+    const [isActorUpdateVisible, setIsActorUpdateVisible] = useState(false); // Add state for update window visibility
 
     useEffect(() => {
         const fetchActors = async () => {
@@ -49,8 +52,13 @@ function ActorList() {
         setIsActorFilmsVisible(false); 
     };
 
+    const handleCloseActorUpdate = () => {
+        setIsActorUpdateVisible(false); // Close the update window
+    };
+
     const handleActorUpdate = (updatedActor) => {
         setActors(actors.map(actor => actor.actorId === updatedActor.actorId ? updatedActor : actor));
+        setIsActorUpdateVisible(false); // Close the update window after updating
     };
 
     return (
@@ -68,7 +76,7 @@ function ActorList() {
                             <li key={actor.actorId} onClick={(event) => handleActorClick(actor.actorId, event)}>
                                 {actor.firstName} {actor.lastName}
                                 <ActorDelete actorId={actor.actorId} onDelete={handleDeleteActor} />
-                                <ActorUpdate actorId={actor.actorId} onUpdate={handleActorUpdate} />
+                                <ActorUpdate actorId={actor.actorId} onUpdate={handleActorUpdate} onClose={handleCloseActorUpdate} />
                             </li>
                         ))}
                     </ul>
