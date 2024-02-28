@@ -20,7 +20,7 @@ function ActorForm({ onAddActor }) {
             setLastName('');
             setFormVisible(false);
         } catch (error) {
-            // Handle error
+            
             setError(error.message);
         }
     };

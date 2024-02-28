@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ActorForm from './ActorForm'; // Assuming the ActorForm component is in the same directory
+import ActorForm from './ActorForm';
+import ActorDelete from './ActorDelete'; 
 
 function ActorList() {
     const [actors, setActors] = useState([]);
@@ -22,8 +23,13 @@ function ActorList() {
         fetchActors();
     }, []);
 
+
     const handleAddActor = (newActor) => {
         setActors([...actors, newActor]);
+    };
+
+    const handleDeleteActor = (actorId) => {
+        setActors(actors.filter(actor => actor.actorId !== actorId));
     };
 
     return (
@@ -38,7 +44,10 @@ function ActorList() {
                     <ActorForm onAddActor={handleAddActor} />
                     <ul id="actor-list">
                         {actors.map(actor => (
-                            <li key={actor.id}>{actor.firstName} {actor.lastName}</li>
+                            <li key={actor.actorId}>
+                                {actor.firstName} {actor.lastName}
+                                <ActorDelete actorId={actor.actorId} onDelete={handleDeleteActor} />
+                            </li>
                         ))}
                     </ul>
                 </div>
