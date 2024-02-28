@@ -9,7 +9,7 @@ function ActorList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedActorId, setSelectedActorId] = useState(null);
-    const [isActorFilmsVisible, setIsActorFilmsVisible] = useState(false);
+    const [isActorFilmsVisible, setIsActorFilmsVisible] = useState(false); 
 
     useEffect(() => {
         const fetchActors = async () => {
@@ -34,17 +34,17 @@ function ActorList() {
         setActors(actors.filter(actor => actor.actorId !== actorId));
         if (selectedActorId === actorId) {
             setSelectedActorId(null);
-            setIsActorFilmsVisible(false);
+            setIsActorFilmsVisible(false); 
         }
     };
 
     const handleActorClick = (actorId) => {
         setSelectedActorId(actorId);
-        setIsActorFilmsVisible(true);
+        setIsActorFilmsVisible(true); 
     };
 
     const handleCloseActorFilms = () => {
-        setIsActorFilmsVisible(false);
+        setIsActorFilmsVisible(false); 
     };
 
     return (
