@@ -60,7 +60,7 @@ function ActorList() {
     };
 
     return (
-        <div id="actor-list-container">
+        <div id="actor-list-container" data-testid='actor-list'>
             {loading ? (
                 <div id="loading-message">Loading...</div>
             ) : error ? (

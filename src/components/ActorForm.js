@@ -31,23 +31,23 @@ function ActorForm({ onAddActor }) {
 
     return (
         <div id="actor-form-container">
-            <button onClick={toggleFormVisibility}>Add Actor</button>
+            <button id='first-add-actor-button' data-testid='first-add-actor-button' onClick={toggleFormVisibility}>Add Actor</button>
             {formVisible && (
                 <div>
                     <h2>Add Actor</h2>
                     {error && <div id="error-message">Error: {error}</div>}
                     <form onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="firstName">First Name:</label>
+                        <div data-testid='first-name-input'>
+                            <label  htmlFor="firstName">First Name:</label>
                             <input type="text" id="firstName" value={firstName} onChange={(e) =>
                                 setFirstName(e.target.value)} required />
                         </div>
-                        <div>
+                        <div data-testid='last-name-input'>
                             <label htmlFor="lastName">Last Name:</label>
                             <input type="text" id="lastName" value={lastName} onChange={(e) =>
                                 setLastName(e.target.value)} required />
                         </div>
-                        <button id='add-actor-button' type="submit">Add Actor</button>
+                        <button id='add-actor-button' data-testid='add-actor-button' type="submit">Add Actor</button>
                     </form>
                 </div>
             )}
