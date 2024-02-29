@@ -7,6 +7,7 @@ function Findafilm (){
     return (
         <div>
             <Header />
+            <br></br>
             <FilmCategorySelector />
           
         </div>

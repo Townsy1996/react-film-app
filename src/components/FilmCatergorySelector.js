@@ -37,33 +37,36 @@ function FilmCategorySelector() {
     };
 
     return (
-        <div>
-            <label htmlFor="categorySelect">What are you in the mood for?</label>
-            <select id="categorySelect" value={selectedCategory} onChange={handleCategoryChange}>
-                <option value="">Select a category</option>
-                
-                {categories.map(category => (
-                    <option key={category.categoryId} value={category.name}>{category.name}</option>
-                ))}
-                
-            </select>
+        <div className='catergory-selector' id='cat-select'>
+    <label htmlFor="categorySelect" id="categoryLabel">What are you in the mood for?</label>
+    <select id="categorySelect" value={selectedCategory} onChange={handleCategoryChange}>
+        <option value="" id="defaultOption">Select a category</option>
+        
+        {categories.map(category => (
+            <option key={category.categoryId} value={category.name} id={`categoryOption-${category.categoryId}`}>
+                {category.name}
+            </option>
+        ))}
+        
+    </select>
 
-            {loading ? (
-                <div>Loading...</div>
+    {loading ? (
+        <div>Loading...</div>
+    ) : (
+        <div>
+            {films.length === 0 ? (
+                <p id="noFilmsMessage">No films found for the selected category.</p>
             ) : (
-                <div>
-                    {films.length === 0 ? (
-                        <p>No films found for the selected category.</p>
-                    ) : (
-                        <ul>
-                            {films.map(film => (
-                                <li key={film.filmId}>{film.title}</li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
+                <ul id="filmsList">
+                    {films.map(film => (
+                        <li key={film.filmId} id={`filmItem-${film.filmId}`}>{film.title}</li>
+                    ))}
+                </ul>
             )}
         </div>
+    )}
+</div>
+
     );
 }
 
