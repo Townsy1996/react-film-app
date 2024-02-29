@@ -1,5 +1,3 @@
-// ActorList.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ActorForm from './ActorForm';
@@ -74,8 +72,9 @@ function ActorList() {
                     <ul id="actor-list">
                         {actors.map(actor => (
                             <li key={actor.actorId} onClick={(event) => handleActorClick(actor.actorId, event)}>
-                                {actor.firstName} {actor.lastName}
+                                {actor.firstName} {actor.lastName}<br></br>
                                 <ActorDelete actorId={actor.actorId} onDelete={handleDeleteActor} />
+                                <br></br>
                                 <ActorUpdate actorId={actor.actorId} onUpdate={handleActorUpdate} onClose={handleCloseActorUpdate} />
                             </li>
                         ))}
