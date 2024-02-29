@@ -7,7 +7,7 @@ function Starlist() {
         <div>
             <Header />
             <ActorList />
-            
+
         </div>
     );
 }

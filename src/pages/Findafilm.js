@@ -5,7 +5,7 @@ import FilmCategorySelector from '../components/FilmCatergorySelector';
 function Findafilm (){
 
     return (
-        <div>
+        <div data-testid="findafilm-page"> 
             <Header />
             <br></br>
             <FilmCategorySelector />
