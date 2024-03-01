@@ -25,14 +25,14 @@ function ActorDelete({ actorId, onDelete }) {
 
     return (
         <>
-            <button id='delete-button' onClick={handleDelete}>Delete Actor</button>
+            <button id='delete-button' data-testid='delete-button' onClick={handleDelete}>Delete Actor</button>
             {showConfirmation && (
                 <div className="confirmation-overlay" onClick={(e) => e.stopPropagation()}>
                     <div className="confirmation-dialog">
                         <p className="confirmation-message">Are you sure you want to delete?</p>
                         <div className="confirmation-buttons">
-                            <button onClick={confirmDelete}>Yes, I am sure</button>
-                            <button onClick={cancelDelete}>No, cancel</button>
+                            <button data-testid ='confirm-button' onClick={confirmDelete}>Yes, I am sure</button>
+                            <button data-testid='deny-button' onClick={cancelDelete}>No, cancel</button>
                         </div>
                     </div>
                 </div>

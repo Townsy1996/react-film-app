@@ -8,7 +8,7 @@ function FilmCategorySelector() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // Fetch available categories from the backend
+        
         const fetchCategories = async () => {
             try {
                 const response = await axios.get('http://16.171.0.136:8080/cat/getAll');
@@ -26,7 +26,7 @@ function FilmCategorySelector() {
         setSelectedCategory(category);
         setLoading(true);
         try {
-            // Fetch films based on the selected category
+           
             const response = await axios.get(`http://16.171.0.136:8080/film/getByCatName/${category}`);
             setFilms(response.data);
             setLoading(false);

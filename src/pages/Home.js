@@ -5,7 +5,7 @@ import HomeMessage from '../components/HomeMessage';
 function Home (){
 
     return (
-        <div>
+        <div data-testid='home-comp'>
             <Header />
             <br></br>
             <HomeMessage />

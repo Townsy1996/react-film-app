@@ -53,14 +53,14 @@ function ActorUpdate({ actorId, onUpdate, onClose }) {
                         <input type="text" id="lastName" value={lastName} onChange={(e) => 
                         setLastName(e.target.value)}/>
                     </div>
-                    <button id="update-button" onClick={handleUpdate} disabled={loading}>
+                    <button data-testid='confirm-update' id="update-button" onClick={handleUpdate} disabled={loading}>
                         {loading ? 'Updating...' : 'Update'}
                     </button>
                     {error && <div>Error: {error}</div>}
                     <button id="update-button" onClick={handleClose}>Cancel</button> 
                 </div>
             ) : (
-                <button id="update-button" onClick={() => setExpanded(true)}>Update</button>
+                <button data-testid='update-button' id="update-button" onClick={() => setExpanded(true)}>Update</button>
             )}
         </div>
     );
