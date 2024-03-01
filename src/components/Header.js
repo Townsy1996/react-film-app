@@ -10,7 +10,7 @@ function Header() {
 
         <header className="header" data-testid="header">
             <div className="banner-container">
-                
+
             </div>
             <h1 id='main-title'>Flick Finder</h1>
 
@@ -25,6 +25,14 @@ function Header() {
 
                 <Link to="/starlist">
                     <button id="starListButton">Star List</button>
+                </Link>
+
+                <Link to="/">
+                    <button id="loginButton">Login</button>
+                </Link>
+
+                <Link to="/">
+                    <button id="registerButton">Register</button>
                 </Link>
 
 

@@ -64,9 +64,8 @@ describe('ActorForm', () => {
     expect(onAddActorMock).toHaveBeenCalledWith({ id: 1, firstName: 'John', lastName: 'Doe' });
   });
 
+
 });
-
-
 
 describe('Header Component', () => {
   test('renders the header component', () => {
@@ -100,7 +99,7 @@ describe('ActorList Component Tests', () => {
     const actorListElement = screen.getByTestId('actor-list');
     expect(actorListElement).toBeInTheDocument();
   });
-  
+
 
   test('renders loading message initially', () => {
     render(<MemoryRouter><ActorList /></MemoryRouter>);
