@@ -6,6 +6,7 @@ import ActorList from './components/ActorList';
 import ActorForm from './components/ActorForm';
 import Home from './pages/Home';
 import axios from 'axios';
+import App from './App';
 
 
 jest.mock("axios");
@@ -68,6 +69,12 @@ describe('ActorForm', () => {
 
 });
 
+describe('App Component Tests', () => {
+  test('renders whole app component', () => {
+    render(<App />);
+  });
+});
+
 describe('Header Component Tests', () => {
   test('renders the header component', () => {
     render(<MemoryRouter><Header /></MemoryRouter>);
@@ -100,8 +107,6 @@ describe('Home page Component Tests', () => {
     expect(homeElement).toBeInTheDocument();
   });
 });
-
-
 
 describe('ActorList Component Tests', () => {
   afterEach(() => {
@@ -172,20 +177,20 @@ describe('ActorList Component Tests', () => {
     render(<ActorList />);
 
     await waitFor(() => {
-    fireEvent.click(screen.getByTestId('update-button'));
+      fireEvent.click(screen.getByTestId('update-button'));
     });
 
-   
+
     fireEvent.change(screen.getByLabelText('First Name:'), { target: { value: 'Updated' } });
     fireEvent.change(screen.getByLabelText('Last Name:'), { target: { value: 'Doe' } });
 
-    
+
     fireEvent.click(screen.getByText('Update'));
 
     await waitFor(() => {
-      
+
       expect(axios.put).toHaveBeenCalledWith('http://16.171.0.136:8080/actor/update/1', { firstName: 'Updated', lastName: 'Doe' });
-      expect(screen.getByText('John Updated Doe')).toBeInTheDocument(); 
+      expect(screen.getByText('John Updated Doe')).toBeInTheDocument();
     });
   });
 

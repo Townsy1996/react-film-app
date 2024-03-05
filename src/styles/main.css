@@ -223,16 +223,17 @@ body {
 
 /* Styles for Actor starred in overlay */
 
-.overlay {
+.overlay
+.film-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
 }
 
@@ -246,13 +247,16 @@ body {
     overflow: auto;
 }
 
+
 .overlay-content ul {
     list-style-type: none;
     padding-left: 0;
 }
 
+
+
 /* Styles for category selector */
-.catergory-selector {
+#cat-select {
     font-family: Arial, sans-serif;
     max-width: 400px;
     margin: 0 auto;
@@ -294,3 +298,35 @@ body {
 #noFilmsMessage {
     color: #555;
 }
+
+#minRuntime,
+#maxRuntime,
+#filterButton {
+    width: 15%;
+    padding: 8px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+#minRuntime,
+#maxRuntime {
+    margin-right: 5px;
+}
+
+#filterButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#filterButton:hover {
+    background-color: #45a049;
+}
+
+#runtime-filter>div {
+    margin-top: 10px;
+}
+
+
+
