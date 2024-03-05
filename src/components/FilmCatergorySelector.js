@@ -125,7 +125,7 @@ function FilmCategorySelector() {
             )}
             {showOverlay && selectedFilm && (
                 <div className="film-overlay" onClick={handleOverlayClick} ref={overlayRef}>
-                    <div className="overlay-content">
+                    <div className="film-overlay-content">
                     <h2>{selectedFilm.title}</h2>
                     <p>{selectedFilm.description}</p>
                     <p>Release Year: {selectedFilm.releaseYear}</p>

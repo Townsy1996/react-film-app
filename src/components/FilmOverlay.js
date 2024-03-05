@@ -7,8 +7,8 @@ function FilmOverlay({ film, onClose }) {
   };
 
   return (
-    <div className="overlay" onClick={onClose}>
-      <div className="overlay-content" onClick={handleClose}>
+    <div className="film-overlay" onClick={onClose}>
+      <div className="film-overlay-content" onClick={handleClose}>
         <h2>{film.title}</h2>
         <p>{film.description}</p>
         <p>Release Year: {film.releaseYear}</p>
