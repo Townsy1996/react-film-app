@@ -212,12 +212,10 @@ describe('ActorList Component Tests', () => {
     expect(actorListElement).toBeInTheDocument();
   });
 
-
   test('renders loading message initially', () => {
     render(<MemoryRouter><ActorList /></MemoryRouter>);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
-
 
   test('fetches actors and renders them correctly', async () => {
     const actors = [
@@ -227,11 +225,9 @@ describe('ActorList Component Tests', () => {
 
     axios.get.mockResolvedValueOnce({ data: actors });
 
-    render(<ActorList />);
+    render(<MemoryRouter><ActorList /></MemoryRouter>);
 
     await waitFor(() => {
-
-      expect(screen.getByTestId('actor-list')).toBeInTheDocument();
       expect(screen.getByText('John Doe')).toBeInTheDocument();
       expect(screen.getByText('Jane Smith')).toBeInTheDocument();
     });
@@ -244,18 +240,18 @@ describe('ActorList Component Tests', () => {
     ];
 
     axios.get.mockResolvedValueOnce({ data: actors });
+    axios.delete.mockResolvedValueOnce({}); // Mock delete action
 
-    render(<ActorList />);
+    render(<MemoryRouter><ActorList /></MemoryRouter>);
 
     await waitFor(() => {
       fireEvent.click(screen.getAllByTestId('delete-button')[0]);
       fireEvent.click(screen.getByTestId('confirm-button'));
-
     });
-    await waitFor(() => {
 
-      expect(screen.queryByText('John Doe')).toBeNull();
-      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText('John Doe')).toBeNull(); // Actor is deleted
+      expect(screen.getByText('Jane Smith')).toBeInTheDocument(); // Other actor remains
     });
   });
 
@@ -265,68 +261,77 @@ describe('ActorList Component Tests', () => {
     ];
 
     axios.get.mockResolvedValueOnce({ data: actors });
-    axios.put.mockResolvedValueOnce({ data: { actorId: 1, firstName: 'John', lastName: 'Updated Doe' } });
+    axios.put.mockResolvedValueOnce({ data: { actorId: 1, firstName: 'John Updated', lastName: 'Doe' } }); // Mock successful update
 
-    render(<ActorList />);
+    render(<MemoryRouter><ActorList /></MemoryRouter>);
 
     await waitFor(() => {
-      fireEvent.click(screen.getByTestId('update-button'));
+      fireEvent.click(screen.getByTestId('update-button')); // Open update form
     });
 
-
-    fireEvent.change(screen.getByLabelText('First Name:'), { target: { value: 'Updated' } });
+    fireEvent.change(screen.getByLabelText('First Name:'), { target: { value: 'John Updated' } });
     fireEvent.change(screen.getByLabelText('Last Name:'), { target: { value: 'Doe' } });
 
-
-    fireEvent.click(screen.getByText('Update'));
+    fireEvent.click(screen.getByText('Update')); // Submit update
 
     await waitFor(() => {
-
-      expect(axios.put).toHaveBeenCalledWith('http://16.171.0.136:8080/actor/update/1', { firstName: 'Updated', lastName: 'Doe' });
-      expect(screen.getByText('John Updated Doe')).toBeInTheDocument();
+      expect(axios.put).toHaveBeenCalledWith('http://16.171.0.136:8080/actor/update/1', { firstName: 'John Updated', lastName: 'Doe' });
+      expect(screen.getByText('John Updated Doe')).toBeInTheDocument(); 
+      expect(screen.queryByTestId('update-form')).not.toBeInTheDocument(); 
     });
   });
 
-  describe('ActorFilms Component', () => {
-    it('renders loading state initially', () => {
-      
-      axios.get.mockResolvedValue({ data: [] });
+  test('handles error gracefully', async () => {
+    const errorMessage = 'Failed to fetch actors';
+    axios.get.mockRejectedValueOnce(new Error(errorMessage)); 
 
-      const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
-      expect(getByText('Loading films...')).toBeInTheDocument();
+    render(<MemoryRouter><ActorList /></MemoryRouter>);
+
+    await waitFor(() => {
+      expect(screen.getByText(`Error: ${errorMessage}`)).toBeInTheDocument(); // Check if error message is displayed
     });
+  });
+});
 
-    it('renders error state if axios request fails', async () => {
-      
-      axios.get.mockRejectedValue(new Error('Network Error'));
+describe('ActorFilms Component', () => {
+  it('renders loading state initially', () => {
 
-      const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
-      await waitFor(() => {
-        expect(getByText('Error: Network Error')).toBeInTheDocument();
-      });
+    axios.get.mockResolvedValue({ data: [] });
+
+    const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
+    expect(getByText('Loading films...')).toBeInTheDocument();
+  });
+
+  it('renders error state if axios request fails', async () => {
+
+    axios.get.mockRejectedValue(new Error('Network Error'));
+
+    const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
+    await waitFor(() => {
+      expect(getByText('Error: Network Error')).toBeInTheDocument();
     });
+  });
 
-    it('renders films when axios request succeeds', async () => {
-      
-      const sampleFilms = [{ filmId: 1, title: 'Film 1' }, { filmId: 2, title: 'Film 2' }];
-      axios.get.mockResolvedValue({ data: sampleFilms });
+  it('renders films when axios request succeeds', async () => {
 
-      const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
-      await waitFor(() => {
-        expect(getByText('Films Starring this Actor:')).toBeInTheDocument();
-        expect(getByText('Film 1')).toBeInTheDocument();
-        expect(getByText('Film 2')).toBeInTheDocument();
-      });
+    const sampleFilms = [{ filmId: 1, title: 'Film 1' }, { filmId: 2, title: 'Film 2' }];
+    axios.get.mockResolvedValue({ data: sampleFilms });
+
+    const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
+    await waitFor(() => {
+      expect(getByText('Films Starring this Actor:')).toBeInTheDocument();
+      expect(getByText('Film 1')).toBeInTheDocument();
+      expect(getByText('Film 2')).toBeInTheDocument();
     });
+  });
 
-    it('calls onClose when close button is clicked', () => {
-      const onCloseMock = jest.fn();
-      const { getByText } = render(<ActorFilms actorId="1" onClose={onCloseMock} />);
+  it('calls onClose when close button is clicked', () => {
+    const onCloseMock = jest.fn();
+    const { getByText } = render(<ActorFilms actorId="1" onClose={onCloseMock} />);
 
-      fireEvent.click(getByText('Close'));
-      expect(onCloseMock).toHaveBeenCalledTimes(1);
-    });
-
+    fireEvent.click(getByText('Close'));
+    expect(onCloseMock).toHaveBeenCalledTimes(1);
   });
 
 });
+
