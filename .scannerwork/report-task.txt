@@ -1,0 +1,7 @@
+organization=townsy1996
+projectKey=Townsy1996_react-film-app
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.53287
+dashboardUrl=https://sonarcloud.io/dashboard?id=Townsy1996_react-film-app
+ceTaskId=AY4UexLr_biCiNQ3UT9z
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AY4UexLr_biCiNQ3UT9z

@@ -48,12 +48,13 @@
     "moduleNameMapper": {
       "^axios$": "axios/dist/node/axios.cjs"
     },
-    "collectCoverage": true,
+  
     "coverageReporters": [
       "lcov",
       "text",
       "html"
-    ],
-    "coverageDirectory": "coverage"
+    ]
+
+    
   }
 }
