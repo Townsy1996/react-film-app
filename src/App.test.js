@@ -7,6 +7,10 @@ import ActorForm from './components/ActorForm';
 import Home from './pages/Home';
 import axios from 'axios';
 import App from './App';
+import Starlist from './pages/StarList';
+import Findafilm from './pages/Findafilm';
+import FilmCategorySelector from './components/FilmCatergorySelector';
+import ActorFilms from './components/ActorFilms';
 
 
 jest.mock("axios");
@@ -75,6 +79,18 @@ describe('App Component Tests', () => {
   });
 });
 
+describe('StarList Component Tests', () => {
+  test('renders StarList Page', () => {
+    render(<MemoryRouter><Starlist /></MemoryRouter>);
+  });
+});
+
+describe('FindAFilm Component Tests', () => {
+  test('renders FindAFilm Page', () => {
+    render(<MemoryRouter><Findafilm /></MemoryRouter>);
+  });
+});
+
 describe('Header Component Tests', () => {
   test('renders the header component', () => {
     render(<MemoryRouter><Header /></MemoryRouter>);
@@ -106,6 +122,83 @@ describe('Home page Component Tests', () => {
     const homeElement = screen.getByTestId('home-comp');
     expect(homeElement).toBeInTheDocument();
   });
+});
+
+describe('FilmCategorySelector component tests', () => {
+  beforeEach(() => {
+    axios.get.mockResolvedValueOnce({ data: [{ categoryId: 1, name: 'Action' }] });
+    axios.get.mockResolvedValueOnce({ data: [{ filmId: 1, title: 'Movie 1' }, { filmId: 2, title: 'Movie 2' }] });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+
+  test('renders category select and films list', async () => {
+    render(<MemoryRouter><FilmCategorySelector /></MemoryRouter>);
+
+    await waitFor(() => {
+      expect(screen.getByLabelText(/What are you in the mood for?/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Minimum Runtime:/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Maximum Runtime:/i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Filter/i })).toBeInTheDocument();
+      expect(screen.queryByText(/Loading.../i)).not.toBeInTheDocument();
+      expect(screen.getByText(/No films found for the selected category and runtime range./i)).toBeInTheDocument();
+    });
+
+    expect(axios.get).toHaveBeenCalledWith('http://16.171.0.136:8080/cat/getAll');
+
+  });
+
+  test("cat select and time-filter render", async () => {
+    render(<MemoryRouter><FilmCategorySelector /></MemoryRouter>);
+    await waitFor(() => {
+      expect(screen.getByTestId("film-cat-select")).toBeInTheDocument();
+      expect(screen.getByTestId("time-filter")).toBeInTheDocument();
+
+    });
+
+
+  });
+
+
+
+
+
+  test('updates film list when category is selected', async () => {
+    axios.get.mockResolvedValueOnce({ data: [{ categoryId: 1, name: 'Action' }] });
+    axios.get.mockResolvedValueOnce({ data: [{ filmId: 1, title: 'Movie 1', runTime: 120 }] });
+
+    render(<MemoryRouter><FilmCategorySelector /></MemoryRouter>);
+
+
+    await waitFor(() => {
+      expect(screen.getByLabelText(/What are you in the mood for?/i)).toBeInTheDocument();
+    });
+
+
+    fireEvent.change(screen.getByLabelText(/What are you in the mood for?/i), { target: { value: 'Action' } });
+
+
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalledWith('http://16.171.0.136:8080/cat/getAll');
+      expect(axios.get).toHaveBeenCalledWith('http://16.171.0.136:8080/film/getByCatName/');
+
+    });
+  });
+
+  test('handles error during category fetch', async () => {
+    axios.get.mockRejectedValueOnce(new Error('Failed to fetch categories'));
+
+    render(<MemoryRouter><FilmCategorySelector /></MemoryRouter>);
+
+    await waitFor(() => {
+      expect(screen.getByText(/No films found for the selected category and runtime range./i)).toBeInTheDocument();
+    });
+  });
+
+
 });
 
 describe('ActorList Component Tests', () => {
@@ -194,7 +287,46 @@ describe('ActorList Component Tests', () => {
     });
   });
 
+  describe('ActorFilms Component', () => {
+    it('renders loading state initially', () => {
+      
+      axios.get.mockResolvedValue({ data: [] });
+
+      const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
+      expect(getByText('Loading films...')).toBeInTheDocument();
+    });
+
+    it('renders error state if axios request fails', async () => {
+      
+      axios.get.mockRejectedValue(new Error('Network Error'));
+
+      const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
+      await waitFor(() => {
+        expect(getByText('Error: Network Error')).toBeInTheDocument();
+      });
+    });
+
+    it('renders films when axios request succeeds', async () => {
+      
+      const sampleFilms = [{ filmId: 1, title: 'Film 1' }, { filmId: 2, title: 'Film 2' }];
+      axios.get.mockResolvedValue({ data: sampleFilms });
+
+      const { getByText } = render(<ActorFilms actorId="1" onClose={() => { }} />);
+      await waitFor(() => {
+        expect(getByText('Films Starring this Actor:')).toBeInTheDocument();
+        expect(getByText('Film 1')).toBeInTheDocument();
+        expect(getByText('Film 2')).toBeInTheDocument();
+      });
+    });
+
+    it('calls onClose when close button is clicked', () => {
+      const onCloseMock = jest.fn();
+      const { getByText } = render(<ActorFilms actorId="1" onClose={onCloseMock} />);
+
+      fireEvent.click(getByText('Close'));
+      expect(onCloseMock).toHaveBeenCalledTimes(1);
+    });
+
+  });
+
 });
-
-
-

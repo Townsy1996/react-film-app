@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function AddActorFilm({ actorId, onUpdate }) {
+function AddActorFilm({ filmId, onUpdate }) {
     const [showForm, setShowForm] = useState(false);
-    const [filmTitle, setFilmTitle] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleAddFilm = async () => {
         setLoading(true);
         try {
-          
-            const response = await axios.put(`http://16.171.0.136:8080/actor/update/${actorId}`, {
-                filmsStarredIn: [filmTitle] 
+            const response = await axios.put(`http://16.171.0.136:8080/film/updateActorFilms/${filmId}`, {
+                actorId: filmId 
             });
-            
             setLoading(false);
             onUpdate();
         } catch (error) {
@@ -32,13 +29,6 @@ function AddActorFilm({ actorId, onUpdate }) {
             <button onClick={() => setShowForm(true)}>Add Film</button>
             {showForm && (
                 <form onSubmit={handleFormSubmit}>
-                    <input
-                        type="text"
-                        placeholder="Enter film title"
-                        value={filmTitle}
-                        onChange={(e) => setFilmTitle(e.target.value)}
-                        required
-                    />
                     <button type="submit" disabled={loading}>
                         {loading ? 'Adding...' : 'Add'}
                     </button>

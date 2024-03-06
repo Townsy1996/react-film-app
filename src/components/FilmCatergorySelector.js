@@ -66,15 +66,15 @@ function FilmCategorySelector() {
     const handleFilterByRuntime = async () => {
         setLoading(true);
         try {
-            let filteredFilms = films; // Start with all films
+            let filteredFilms = films; 
 
-            // Apply genre filter if a category is selected
+          
             if (selectedCategory) {
                 const response = await axios.get(`http://16.171.0.136:8080/film/getByCatName/${selectedCategory}`);
                 filteredFilms = response.data;
             }
 
-            // Apply runtime range filter if both min and max runtime values are provided
+          
             if (minRuntime !== null && maxRuntime !== null) {
                 filteredFilms = filteredFilms.filter(film => film.runTime >= minRuntime && film.runTime <= maxRuntime);
             }
@@ -88,7 +88,7 @@ function FilmCategorySelector() {
     };
 
     return (
-        <div className='film-category-selector'>
+        <div className='film-category-selector' data-testid='film-cat-select'>
             <div id='cat-select'>
                 <label htmlFor="categorySelect" id="categoryLabel">What are you in the mood for?</label>
                 <select id="categorySelect" value={selectedCategory} onChange={handleCategoryChange}>
@@ -101,7 +101,7 @@ function FilmCategorySelector() {
                 </select>
             </div>
             <br></br>
-            <div id='runtime-filter'>
+            <div id='runtime-filter' data-testid='time-filter'>
                 <label htmlFor="minRuntime">Minimum Runtime:</label>
                 <input type="number" id="minRuntime" value={minRuntime} onChange={(e) => setMinRuntime(e.target.value)} />
                 <label htmlFor="maxRuntime">Maximum Runtime:</label>
@@ -124,7 +124,7 @@ function FilmCategorySelector() {
                 </div>
             )}
             {showOverlay && selectedFilm && (
-                <div className="film-overlay" onClick={handleOverlayClick} ref={overlayRef}>
+                <div className="film-overlay" data-testid='film-overlay' onClick={handleOverlayClick} ref={overlayRef}>
                     <div className="film-overlay-content">
                     <h2>{selectedFilm.title}</h2>
                     <p>{selectedFilm.description}</p>
