@@ -240,7 +240,7 @@ describe('ActorList Component Tests', () => {
     ];
 
     axios.get.mockResolvedValueOnce({ data: actors });
-    axios.delete.mockResolvedValueOnce({}); // Mock delete action
+    axios.delete.mockResolvedValueOnce({}); 
 
     render(<MemoryRouter><ActorList /></MemoryRouter>);
 
@@ -250,8 +250,8 @@ describe('ActorList Component Tests', () => {
     });
 
     await waitFor(() => {
-      expect(screen.queryByText('John Doe')).toBeNull(); // Actor is deleted
-      expect(screen.getByText('Jane Smith')).toBeInTheDocument(); // Other actor remains
+      expect(screen.queryByText('John Doe')).toBeNull(); 
+      expect(screen.getByText('Jane Smith')).toBeInTheDocument(); 
     });
   });
 
@@ -261,19 +261,18 @@ describe('ActorList Component Tests', () => {
     ];
 
     axios.get.mockResolvedValueOnce({ data: actors });
-    axios.put.mockResolvedValueOnce({ data: { actorId: 1, firstName: 'John Updated', lastName: 'Doe' } }); // Mock successful update
+    axios.put.mockResolvedValueOnce({ data: { actorId: 1, firstName: 'John Updated', lastName: 'Doe' } }); 
 
     render(<MemoryRouter><ActorList /></MemoryRouter>);
 
     await waitFor(() => {
-      fireEvent.click(screen.getByTestId('update-button')); // Open update form
+      fireEvent.click(screen.getByTestId('update-button')); 
     });
 
     fireEvent.change(screen.getByLabelText('First Name:'), { target: { value: 'John Updated' } });
     fireEvent.change(screen.getByLabelText('Last Name:'), { target: { value: 'Doe' } });
 
-    fireEvent.click(screen.getByText('Update')); // Submit update
-
+    fireEvent.click(screen.getByText('Update')); 
     await waitFor(() => {
       expect(axios.put).toHaveBeenCalledWith('http://16.171.0.136:8080/actor/update/1', { firstName: 'John Updated', lastName: 'Doe' });
       expect(screen.getByText('John Updated Doe')).toBeInTheDocument(); 
