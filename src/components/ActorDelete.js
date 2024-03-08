@@ -31,7 +31,7 @@ function ActorDelete({ actorId, onDelete }) {
                     <div className="confirmation-dialog">
                         <p className="confirmation-message">Are you sure you want to delete?</p>
                         <div className="confirmation-buttons">
-                            <button data-testid ='confirm-button' onClick={confirmDelete}>Yes, I am sure</button>
+                            <button id="confirm-button" data-testid ='confirm-button' onClick={confirmDelete}>Yes, I am sure</button>
                             <button data-testid='deny-button' onClick={cancelDelete}>No, cancel</button>
                         </div>
                     </div>

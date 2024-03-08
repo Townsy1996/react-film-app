@@ -37,12 +37,12 @@ function ActorForm({ onAddActor }) {
                     <h2>Add Actor</h2>
                     {error && <div id="error-message">Error: {error}</div>}
                     <form onSubmit={handleSubmit}>
-                        <div data-testid='first-name-input'>
+                        <div id='firstNameInput 'data-testid='first-name-input'>
                             <label  htmlFor="firstName">First Name:</label>
                             <input type="text" id="firstName" value={firstName} onChange={(e) =>
                                 setFirstName(e.target.value)} required />
                         </div>
-                        <div data-testid='last-name-input'>
+                        <div id="lastNameInput" data-testid='last-name-input'>
                             <label htmlFor="lastName">Last Name:</label>
                             <input type="text" id="lastName" value={lastName} onChange={(e) =>
                                 setLastName(e.target.value)} required />
